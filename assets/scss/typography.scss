@@ -1,0 +1,31 @@
+@use '~sass-mq' as * with (
+  $breakpoints: (
+    tiny: 320px,
+    small: 576px,
+    medium: 768px,
+    large: 1024px,
+    x-large: 1367px,
+    wide: 1441px
+  )
+);
+
+$BASE_FONT_SIZE: 16px;
+
+@function rem($size) {
+  @return calc($size / $BASE_FONT_SIZE) * 1rem;
+}
+
+
+.display {
+  font-size: rem(30px);
+  font-weight: $FONT_WEIGHT_BLACK;
+  line-height: $LINE_HEIGHT_DISPLAY;
+
+  @include mq($from:large) {
+    font-size: rem(50px);
+  }
+
+  @include mq($from:wide) {
+    font-size: rem(70px);
+  }
+}
