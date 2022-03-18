@@ -5,22 +5,26 @@
     color: $COLOR_TEXT_SECONDARY;
     text-transform: uppercase;
 
+    @for $i from 1 through 15 {
+      #{$parent}__title-line-#{$i} {
+        opacity: 1;
+        transform: translate(0px);
+        transition-delay: #{0.3 * $i}s;
+      }
+    }
+
     span {
       display: inline-block;
       opacity: 0;
       transform: translate(20px);
       transition: all 0.9s ease-out;
 
+      &#{$parent}__title-animated {
+        transition: none;
+      }
+
       &:not(:last-child) {
         padding-right: rem(10px);
-      }
-    }
-
-    @for $i from 1 through 15 {
-      #{$parent}__title-line-#{$i} {
-        opacity: 1;
-        transform: translate(0px);
-        transition-delay: #{0.3 * $i}s;
       }
     }
   }

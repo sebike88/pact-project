@@ -38,12 +38,14 @@ export default {
     // https://go.nuxtjs.dev/stylelint
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss',
+
+    'nuxt-gsap-module'
   ],
 
   googleFonts: {
     families: {
-      Overpass: [200, 400, 900]
+      Overpass: [200, 400, 700, 900]
     },
     display: 'swap'
   },

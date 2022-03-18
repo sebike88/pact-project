@@ -1,7 +1,8 @@
 <template>
   <div class="font-sans">
     <DisplaySection />
-    <Tutorial />
+    <CarouselSection />
+    <!-- <Tutorial /> -->
   </div>
 </template>
 

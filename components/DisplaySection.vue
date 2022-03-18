@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-4xl mx-auto px-9 py-20 lg:px-20 2xl:px-0 lg:py-48 font-sans container display-section"
+    class="max-w-4xl mx-auto px-6 py-20 lg:px-20 2xl:px-0 lg:py-48 container display-section"
   >
     <h1 class="display-section__title display">
       <span
@@ -18,13 +18,11 @@ export default {
   name: 'DisplaySection',
   data () {
     return {
-      titleString: 'Occasionally, we offer perspectives on the direct-to-consumer landscape, retail innovations, happenings aroundpact and the odd creative experiment.'
+      titleString: 'Occasionally, we offer perspectives on the direct-to-consumer landscape, retail innovations, happenings around pact and the odd creative experiment.'
     }
   },
   mounted () {
     this.getSpansLinePosition()
-
-    window.addEventListener('resize', this.getSpansLinePosition)
   },
   methods: {
     splitTitleWords () {
@@ -44,6 +42,12 @@ export default {
 
         word.removeAttribute('class')
         word.classList.add(`display-section__title-line-${line}`)
+        this.onAnimationEnd(word)
+      })
+    },
+    onAnimationEnd (element) {
+      element.addEventListener('transitionend', () => {
+        element.classList.add('display-section__title-animated')
       })
     }
   }
