@@ -32,18 +32,34 @@
 
   &__title {
     @include transition();
-    font-size: rem(30px);
+    border: 1px solid transparent;
     color: $COLOR_PEBBLE;
+    font-size: rem(30px);
     left: 0;
+    padding: 0 rem(10px);
     position: absolute;
     text-align: center;
-    top: 50%;
+    top: 30%;
     transform: rotate(270deg) translateY(-100%) scale(0.5);
+    transform-origin: bottom center;
     user-select: none;
 
     &-container {
       min-height: 250px;
       min-width: rem(48px);
+    }
+
+    &::before {
+      @include transition(opacity);
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 1px;
+      background-color: $COLOR_PRIMARY;
+      opacity: 0;
+      top: -5px;
+      left: 50%;
+      transform: translate(-50%);
     }
   }
 
@@ -108,6 +124,10 @@
     #{$parent}__title {
       color: $COLOR_PRIMARY;
       transform: rotate(270deg) translateY(-100%) scale(0.7);
+
+      &::before {
+        opacity: 1;
+      }
     }
   }
 

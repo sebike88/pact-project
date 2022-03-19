@@ -11,7 +11,11 @@
         Latest Stories
       </h2>
     </div>
-    <div ref="wrapper" class="carousel__wrapper">
+    <div
+      ref="wrapper"
+      class="carousel__wrapper"
+      data-mouse-message="Drag"
+    >
       <div
         ref="carousel"
         class="carousel__container"
