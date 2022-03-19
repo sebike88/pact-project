@@ -14,19 +14,22 @@
 </template>
 
 <script>
+
+import { mapGetters } from 'vuex'
+
 export default {
   name: 'DisplaySection',
-  data () {
-    return {
-      titleString: 'Occasionally, we offer perspectives on the direct-to-consumer landscape, retail innovations, happenings around pact and the odd creative experiment.'
-    }
+  computed: {
+    ...mapGetters([
+      'getDisplayContent'
+    ])
   },
   mounted () {
     this.getSpansLinePosition()
   },
   methods: {
     splitTitleWords () {
-      return this.titleString.split(' ')
+      return this.getDisplayContent.split(' ')
     },
     getSpansLinePosition () {
       let line = 0

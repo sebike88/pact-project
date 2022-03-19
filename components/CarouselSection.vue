@@ -1,6 +1,6 @@
 <template>
   <div
-    class="carousel slider text-white pl-6 py-20 lg:pl-18 lg:py-48"
+    class="carousel slider text-white pl-6 pb-20 lg:pl-18 lg:pb-48"
     :class="{
       'is-device': isTouchDevice,
       'is-dragging': dragging

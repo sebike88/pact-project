@@ -21,8 +21,6 @@
     top: 0;
 
     &::after {
-      // background-color: $COLOR_BACKGROUND;
-      // box-shadow: 4px 0 11px 9px $COLOR_BACKGROUND;
       content: '';
       height: 100%;
       width: 5px;
@@ -33,22 +31,24 @@
   }
 
   &__title {
-    font-size: rem(16px);
+    @include transition();
+    font-size: rem(30px);
     color: $COLOR_PEBBLE;
     left: 0;
     position: absolute;
     text-align: center;
     top: 50%;
-    transform: rotate(270deg) translateY(-50%);
+    transform: rotate(270deg) translateY(-100%) scale(0.5);
     user-select: none;
 
     &-container {
       min-height: 250px;
-      min-width: 30px;
+      min-width: rem(48px);
     }
   }
 
   &__card {
+    @include transition(transform);
     max-width: 439px;
     will-change: transform;
 
@@ -97,6 +97,17 @@
           width: 100%;
         }
       }
+    }
+  }
+
+  &.is-dragging {
+    #{$parent}__card {
+      transform: scale(0.95);
+    }
+
+    #{$parent}__title {
+      color: $COLOR_PRIMARY;
+      transform: rotate(270deg) translateY(-100%) scale(0.7);
     }
   }
 
