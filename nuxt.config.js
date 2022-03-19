@@ -39,7 +39,6 @@ export default {
     '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/tailwindcss
     '@nuxtjs/tailwindcss',
-
     'nuxt-gsap-module'
   ],
 
@@ -53,7 +52,8 @@ export default {
   styleResources: {
     scss: [
       '~assets/scss/variables.scss',
-      '~assets/scss/typography.scss'
+      '~assets/scss/typography.scss',
+      '~assets/scss/mixins.scss'
     ]
   },
 

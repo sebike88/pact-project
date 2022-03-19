@@ -1,4 +1,5 @@
 export const state = () => ({
+  displayContent: 'Occasionally, we offer perspectives on the direct-to-consumer landscape, retail innovations, happenings around pact and the odd creative experiment.',
   slides: [
     {
       image: '51156e95f300f1e879f858ed0ff37e2d.jpeg',

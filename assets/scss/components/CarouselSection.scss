@@ -1,13 +1,24 @@
 .carousel {
+  $parent: &;
   background-color: $COLOR_BACKGROUND;
   display: flex;
   position: relative;
+  width: 100%;
+  overflow: hidden;
 
-  &__container {
-    display: flex;
-    // overflow-x: scroll;
+  &__wrapper {
+    overflow: hidden;
     flex: 1;
     position: relative;
+  }
+
+  &__container {
+    display: grid;
+    grid-column-gap: rem(9px);
+    grid-template-columns: repeat(12, 1fr);
+    position: absolute;
+    left: 0;
+    top: 0;
 
     &::after {
       // background-color: $COLOR_BACKGROUND;
@@ -29,20 +40,22 @@
     text-align: center;
     top: 50%;
     transform: rotate(270deg) translateY(-50%);
+    user-select: none;
 
     &-container {
       min-height: 250px;
-      width: 30px;
+      min-width: 30px;
     }
   }
 
   &__card {
-    min-width: 300px;
+    max-width: 439px;
     will-change: transform;
 
     &-footer {
       display: flex;
       flex-flow: column nowrap;
+      user-select: none;
     }
 
     &-subtitle {
@@ -54,44 +67,74 @@
 
     &-title {
       font-size: rem(20px);
-      font-weight: $FONT_WEIGHT_BOOK;
+      font-weight: $FONT_WEIGHT_LIGHT;
       line-height: $LINE_HEIGHT_DISPLAY;
     }
 
     &-image {
       pointer-events: none;
-      user-select: none;
+      position: relative;
       transform-origin: left center;
-      transform: scale(1.75);
+      transform: scale(1.2);
+      user-select: none;
       will-change: transform;
 
       &-container {
         border-radius: 40px 40px 40px 0px;
         margin-bottom: rem(15px);
-        max-height: 350px;
+        height: 350px;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::after {
+          content: '';
+          height: 100%;
+          left: 0;
+          position: absolute;
+          top: 0;
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  &.is-device {
+    #{$parent}__container {
+      @include hideScrollbar;
+      overflow-y: hidden;
+      overflow-x: scroll;
+      position: relative;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    #{$parent}__card {
+      &-image {
+        transform: scale(1);
       }
     }
   }
 
   @include mq($from: large) {
-    &__card {
-      max-width: 300px;
-      
+    &__card {      
       &-title {
         font-size: rem(25px);
       }
 
       &-image-container {
         border-radius: 60px 60px 60px 0px;
+        height: 450px;
         margin-bottom: rem(35px);
       }
     }
   }
 
   @include mq($from: wide) {
+    margin-left: calc((100vw - $CONTAINER_MAX_WIDTH) / 2);
+
     &__card {
-      max-width: 439px;
+      width: 439px;
 
       &-title {
         font-size: rem(30px);

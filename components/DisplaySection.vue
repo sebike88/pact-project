@@ -1,6 +1,6 @@
 <template>
   <div
-    class="max-w-4xl mx-auto px-6 py-20 lg:px-20 2xl:px-0 lg:py-48 container display-section"
+    class="max-w-4xl mx-auto px-6 py-20 lg:px-18 2xl:px-0 lg:py-48 container display-section"
   >
     <h1 class="display-section__title display">
       <span

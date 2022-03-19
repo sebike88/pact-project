@@ -5,7 +5,7 @@
     medium: 768px,
     large: 1024px,
     x-large: 1367px,
-    wide: 1441px
+    wide: $CONTAINER_MAX_WIDTH,
   )
 );
 
@@ -14,7 +14,6 @@ $BASE_FONT_SIZE: 16px;
 @function rem($size) {
   @return calc($size / $BASE_FONT_SIZE) * 1rem;
 }
-
 
 .display {
   font-size: rem(25px);

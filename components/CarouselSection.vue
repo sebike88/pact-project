@@ -1,38 +1,47 @@
 <template>
-  <div class="carousel slider container text-white max-w-4xl mx-auto px-6 py-20 lg:px-20 2xl:px-0 lg:py-48">
+  <div
+    class="carousel slider text-white pl-6 py-20 lg:pl-18 lg:py-48"
+    :class="{
+      'is-device': isTouchDevice,
+      'is-dragging': dragging
+    }"
+  >
     <div class="carousel__title-container">
       <h2 class="carousel__title">
         Latest Stories
       </h2>
     </div>
-    <div
-      ref="carousel"
-      class="carousel__container"
-      @mousedown="handleMousedown"
-      @mouseup="handleMouseup"
-      @mouseleave="handleMouseleave"
-      @mousemove="handleMousemove"
-    >
+    <div ref="wrapper" class="carousel__wrapper">
       <div
-        v-for="slide in getSlides"
-        :key="slide.title"
-        ref="slides"
-        class="carousel__card"
+        ref="carousel"
+        class="carousel__container"
+        @mousedown="handleMousedown"
+        @mouseup="handleMouseup"
+        @mouseleave="handleMouseleave"
+        @mousemove="handleMousemove"
       >
-        <a class="carousel__card-link">
-          <div class="carousel__card-image-container">
-            <img
-              class="carousel__card-image"
-              :src="imgUrl(slide.image)"
-              alt=""
-              ref="images"
-            >
-          </div>
-          <div class="carousel__card-footer">
-            <span class="carousel__card-subtitle" v-text="slide.collection" />
-            <span class="carousel__card-title" v-text="slide.title" />
-          </div>
-        </a>
+        <div
+          v-for="(slide, index) in getSlides"
+          :key="slide.collection + index"
+          ref="slides"
+          class="carousel__card w-64 lg:w-80"
+        >
+          <a class="carousel__card-link">
+            <div class="carousel__card-image-container">
+              <img
+                ref="images"
+                draggable="false"
+                class="carousel__card-image"
+                :src="imgUrl(slide.image)"
+                alt=""
+              >
+            </div>
+            <div class="carousel__card-footer">
+              <span class="carousel__card-subtitle" v-text="slide.collection" />
+              <span class="carousel__card-title" v-text="slide.title" />
+            </div>
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -47,15 +56,16 @@ export default {
   name: 'CarouselSection',
   data () {
     return {
-      vs: {},
       bounds: {},
-      dragEnd: 0,
-      dragStart: 0,
       current: 0,
-      last: 0,
-      ease: 0.1,
+      dragEnd: 0,
+      dragging: false,
       dragSpeed: 1.5,
-      dragging: false
+      dragStart: 0,
+      ease: 0.1,
+      isTouchDevice: false,
+      last: 0,
+      vs: {}
     }
   },
   computed: {
@@ -68,28 +78,49 @@ export default {
   },
   methods: {
     init () {
-      this.handleResize()
-      this.setVirtualScroll()
-      this.$gsap.ticker.add(this.smooth)
-      this.$gsap.ticker.add(this.render)
+      this.detectDeviceType()
+      if (this.isTouchDevice) { return }
 
-      document.addEventListener('resize', () => {
+      this.initVScroll()
+      this.handleResize()
+      this.enableVScrollAndGsap()
+
+      window.addEventListener('resize', () => {
         this.handleResize()
       })
     },
-    calc (e) {
+    enableVScrollAndGsap () {
+      this.vs.on(this.calculateCurrentSliderPosition)
+      this.$gsap.ticker.add(this.render)
+      this.$gsap.ticker.add(this.smoothScroll)
+    },
+    setWraperHeight () {
+      const slideBounding = this.$refs.slides[0].getBoundingClientRect()
+      this.$refs.wrapper.style.height = `${slideBounding.height}px`
+    },
+    detectDeviceType () {
+      this.isTouchDevice = 'ontouchstart' in window
+    },
+    calculateCurrentSliderPosition (e) {
       this.current += e.deltaY
       this.current = Math.max((this.bounds.width - window.innerWidth) * -1, this.current)
       this.current = Math.min(0, this.current)
     },
-    smooth () {
+    smoothScroll () {
+      if (!this.dragging) { return }
+
       this.last = lerp(this.last, this.current, this.ease)
       this.$refs.carousel.style.transform = `translate3d(${this.last}px, 0, 0)`
     },
     handleResize () {
+      this.setWraperHeight()
+
       this.bounds = this.$refs.carousel.getBoundingClientRect()
+      this.last = 0
+      this.current = 0
+      this.$refs.carousel.style.transform = 'translate3d(0px, 0, 0)'
     },
-    setVirtualScroll () {
+    initVScroll () {
       this.vs = new VirtualScroll({
         el: this.$refs.carousel,
         mouseMultiplier: 0.45
@@ -108,42 +139,49 @@ export default {
 
         if (inView) {
           const img = this.$refs.images[index]
-          const min = bounds.left - window.innerWidth
+          const min = bounds.left - this.bounds.width
           const max = bounds.right
           const percentage = ((scrollLast - min) * 100) / (max - min)
-          const newMin = -(window.innerWidth / 12) * 3
+          const newMin = -(window.innerWidth / 12) * 2
           const newMax = 0
           item.x = ((percentage - 0) / (100 - 0)) * (newMax - newMin) + newMin
 
-          img.style.transform = `translate3d(${item.x}px, 0, 0) scale(1.75)`
+          img.style.transform = `translate3d(${item.x}px, 0, 0) scale(1.45)`
         }
       })
     },
     handleMousedown (e) {
       this.dragging = true
-
       this.dragEnd = this.current
       this.dragStart = e.clientX
-
-      document.body.classList.add('is-dragging')
     },
     handleMouseup () {
       this.dragging = false
       this.dragEnd = this.current
-
-      document.body.classList.remove('is-dragging')
     },
     handleMouseleave () {
       this.dragging = false
       this.dragEnd = this.current
-
-      document.body.classList.remove('is-dragging')
     },
     handleMousemove (e) {
       if (!this.dragging) { return }
 
       this.current = this.dragEnd + ((e.clientX - this.dragStart) * this.dragSpeed)
-      this.current = clamp(this.current, 0, -this.bounds.width + window.innerWidth)
+      this.current = clamp(this.current, 0, this.getContainerMax())
+
+      console.log(this.$refs.wrapper)
+      console.log(this.$refs.wrapper.getBoundingClientRect())
+      console.log(this.$refs.carousel)
+      console.log(this.current)
+      console.log(this.bounds)
+      console.log(window.innerWidth)
+      console.log(this.getContainerMax())
+    },
+    getContainerMax () {
+      const boundWidth = this.bounds.width
+      const wrapperBounds = this.$refs.wrapper.getBoundingClientRect()
+
+      return wrapperBounds.width - boundWidth
     }
   }
 }
