@@ -50,7 +50,9 @@
 
   function setNodeSelectors () {
     nodeSelectors = {
-      cursor: document.querySelector('[js-cursor="cursor"]')
+      cursor: document.querySelector('[js-cursor="cursor"]'),
+      cursorContent: document.querySelector('[js-cursor="cursorContent"]'),
+      hoverSections: document.querySelectorAll('[js-cursor="section"]')
     }
   }
 
@@ -70,6 +72,7 @@
     window.addEventListener('resize', calcWinsize)
 
     window.addEventListener('mousemove', (event) => {
+      setCursorBounds()
       mousepos = getMousePos(event)
       mouseMoveEventHandler()
     })
@@ -81,15 +84,31 @@
     window.addEventListener('mouseup', () => {
       cursorScale = 1
     })
+
+    hoverSectionsEventListeners()
+  }
+
+  function hoverSectionsEventListeners () {
+    if (nodeSelectors.hoverSections.length === 0) { return }
+
+    [...nodeSelectors.hoverSections].forEach((item) => {
+      item.addEventListener('mouseover', (event) => {
+        const { cursorMessage } = event.currentTarget.dataset
+        nodeSelectors.cursor.classList.add('is-active')
+        nodeSelectors.cursorContent.innerText = cursorMessage
+      })
+
+      item.addEventListener('mouseleave', () => {
+        nodeSelectors.cursor.classList.remove('is-active')
+        nodeSelectors.cursorContent.innerText = ''
+      })
+    })
   }
 
   function appendCursorToDom () {
     document.body.insertAdjacentHTML('beforeend', `
       <div class="cursor" js-cursor="cursor">
-        <div class="cursor__inner cursor__inner--circle">
-          <div class="cursor__side cursor__side--left"></div>
-          <div class="cursor__side cursor__side--right"></div>
-        </div>
+        <div class="cursor__content" js-cursor="cursorContent"></div>
       </div>
     `)
   }
@@ -108,6 +127,10 @@
   }
 
   function init () {
+    if ('ontouchstart' in window) {
+      return
+    }
+
     appendCursorToDom()
     setNodeSelectors()
     setCursorBounds()

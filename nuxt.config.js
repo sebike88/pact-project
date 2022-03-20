@@ -19,13 +19,13 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '~assets/scss/main.scss',
-    '~assets/scss/mouse.scss'
+    '~assets/scss/cursor.scss'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     {
-      src: '~/plugins/mouse.js',
+      src: '~/plugins/cursor.js',
       mode: 'client'
     }
   ],
@@ -49,7 +49,7 @@ export default {
 
   googleFonts: {
     families: {
-      Overpass: [200, 400, 700, 900]
+      Overpass: [200, 400, 700, 800, 900]
     },
     display: 'swap'
   },

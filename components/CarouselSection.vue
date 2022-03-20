@@ -14,7 +14,8 @@
     <div
       ref="wrapper"
       class="carousel__wrapper"
-      data-mouse-message="Drag"
+      js-cursor="section"
+      data-cursor-message="Drag"
     >
       <div
         ref="carousel"
@@ -93,6 +94,9 @@ export default {
         this.handleResize()
       })
     },
+    imgUrl (image) {
+      return require(`@/assets/images/CarouselSection/${image}`)
+    },
     enableVScrollAndGsap () {
       this.vs.on(this.calculateCurrentSliderPosition)
       this.$gsap.ticker.add(this.render)
@@ -129,9 +133,6 @@ export default {
         el: this.$refs.carousel,
         mouseMultiplier: 0.45
       })
-    },
-    imgUrl (image) {
-      return require(`@/assets/images/CarouselSection/${image}`)
     },
     render () {
       const last = lerp(this.last, this.current, this.ease)
@@ -172,14 +173,6 @@ export default {
 
       this.current = this.dragEnd + ((e.clientX - this.dragStart) * this.dragSpeed)
       this.current = clamp(this.current, 0, this.getContainerMax())
-
-      console.log(this.$refs.wrapper)
-      console.log(this.$refs.wrapper.getBoundingClientRect())
-      console.log(this.$refs.carousel)
-      console.log(this.current)
-      console.log(this.bounds)
-      console.log(window.innerWidth)
-      console.log(this.getContainerMax())
     },
     getContainerMax () {
       const boundWidth = this.bounds.width

@@ -9,5 +9,5 @@
 }
 
 @mixin transition($property: all) {
-  transition: $property 0.25s ease 0s;
+  transition: $property $ANIMATION_TIME $ANIMATION_EASING;
 }

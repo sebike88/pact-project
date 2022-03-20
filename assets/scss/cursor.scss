@@ -1,0 +1,48 @@
+.cursor {
+  $parent: &;
+  align-items: center;
+  background-color: $COLOR_PRIMARY;
+  border-radius: 100%;
+  display: flex;
+  height: 16px;
+  justify-content: center;
+  overflow: hidden;
+  pointer-events: none;
+  position: fixed;
+  text-align: center;
+  top: 0px;
+  transform: scale(1);
+  transition:
+    background-color $ANIMATION_TIME $ANIMATION_EASING,
+    height $ANIMATION_TIME $ANIMATION_EASING,
+    width $ANIMATION_TIME $ANIMATION_EASING;
+  width: 16px;
+  z-index: 999;
+
+  &__content {
+    @include transition(transform);
+    font-size: rem(13px);
+    transform: scale(0);
+    font-weight: $FONT_WEIGHT_BOLD;
+    margin-top: 5px;
+    transform-origin: center;
+    text-transform: uppercase;
+  }
+
+  &.is-active {
+    background-color: $COLOR_WHITE;
+    height: 60px;
+    width: 60px;
+
+    #{$parent}__content {
+      transform: scale(1);
+    }
+  }
+
+  @include mq($from: wide) {
+    &.is-active {
+      height: 110px;
+      width: 110px;
+    }
+  }
+}

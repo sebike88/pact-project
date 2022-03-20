@@ -40,26 +40,34 @@
     position: absolute;
     text-align: center;
     top: 30%;
-    transform: rotate(270deg) translateY(-100%) scale(0.5);
+    transform: rotate(270deg) translateY(-120%) scale(0.5);
     transform-origin: bottom center;
     user-select: none;
 
     &-container {
       min-height: 250px;
-      min-width: rem(48px);
+      min-width: rem(30px);
+    }
+
+    &::before,
+    &::after {
+      @include transition(opacity);
+      background-color: $COLOR_PRIMARY;
+      content: '';
+      height: 1px;
+      left: 50%;
+      opacity: 0;
+      position: absolute;
+      transform: translate(-50%);
+      width: 50%;
     }
 
     &::before {
-      @include transition(opacity);
-      content: '';
-      position: absolute;
-      width: 50%;
-      height: 1px;
-      background-color: $COLOR_PRIMARY;
-      opacity: 0;
       top: -5px;
-      left: 50%;
-      transform: translate(-50%);
+    }
+
+    &::after {
+      bottom: -5px;
     }
   }
 
@@ -125,7 +133,8 @@
       color: $COLOR_PRIMARY;
       transform: rotate(270deg) translateY(-100%) scale(0.7);
 
-      &::before {
+      &::before,
+      &::after {
         opacity: 1;
       }
     }
@@ -148,6 +157,12 @@
   }
 
   @include mq($from: large) {
+    &__title {
+      &-container {
+        min-width: rem(80px);
+      }
+    }
+
     &__card {      
       &-title {
         font-size: rem(25px);
@@ -162,7 +177,14 @@
   }
 
   @include mq($from: wide) {
+    width: unset;
     margin-left: calc((100vw - $CONTAINER_MAX_WIDTH) / 2);
+
+    &__title {
+      &-container {
+        min-width: rem(128px);
+      }
+    }
 
     &__card {
       width: 439px;
