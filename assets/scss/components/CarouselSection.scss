@@ -1,5 +1,28 @@
+@keyframes title {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes carousel_animation {
+  0% {
+    opacity: 0;
+    transform: translateX(5%);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
 .carousel {
   $parent: &;
+  animation: carousel_animation 2s ease-in-out;
   background-color: $COLOR_BACKGROUND;
   display: flex;
   position: relative;
@@ -45,6 +68,8 @@
     user-select: none;
 
     &-container {
+      animation: title 2s ease-out;
+      opacity: 1;
       min-height: 250px;
       min-width: rem(30px);
     }
