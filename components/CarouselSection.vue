@@ -151,7 +151,7 @@ export default {
           const newMax = 0
           item.x = ((percentage - 0) / (100 - 0)) * (newMax - newMin) + newMin
 
-          img.style.transform = `translate3d(${item.x}px, 0, 0) scale(1.45)`
+          img.style.transform = `translate3d(${item.x}px, 0, 0) scale(1.7)`
         }
       })
     },
