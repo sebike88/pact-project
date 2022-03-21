@@ -2,7 +2,7 @@
   <div class="font-sans">
     <DisplaySection />
     <CarouselSection />
-    <!-- <Tutorial /> -->
+    <TextBannerSection />
   </div>
 </template>
 

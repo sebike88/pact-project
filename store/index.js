@@ -36,7 +36,15 @@ export const state = () => ({
       collection: 'Category',
       title: 'Praesent commodo cursus magna, vel scelerisque'
     }
-  ]
+  ],
+  textBanner: {
+    title: 'The intersection of design, technology and business.',
+    content: 'Pact takes a unique, team-like, and holistic approach to building direct-to-consumer businesses: we do more across a variety of touchpoints for fewer clients so that we can be accountable and flexible to all the road bumps that inherently come with building something new. ',
+    cta: {
+      url: '/',
+      text: 'Start your project with pact'
+    }
+  }
 })
 
 export const getters = {
@@ -46,5 +54,9 @@ export const getters = {
 
   getDisplayContent: (state) => {
     return state.displayContent
+  },
+
+  getBannerContent: (state) => {
+    return state.textBanner
   }
 }

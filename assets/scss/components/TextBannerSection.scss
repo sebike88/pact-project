@@ -1,0 +1,68 @@
+.text-banner {
+  background-color: $COLOR_PRIMARY;
+  color: $COLOR_BACKGROUND;
+
+  &__title {
+    line-height: $LINE_HEIGHT_DISPLAY;
+    text-transform: uppercase;
+
+    &-container {
+      align-items: center;
+      display: flex;
+    }
+  }
+
+  &__content {
+    &-container {
+      align-items: flex-start;
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: center;
+    }
+  }
+
+  &__container.container {
+    max-width: 1816px;
+  }
+
+  &__cta {
+    @include transition(color);
+    background-color: transparent;
+    border-radius: 70px;
+    border: 1px solid $COLOR_BACKGROUND;
+    display: inline-block;
+    color: $COLOR_BACKGROUND;
+    font-weight: $FONT_WEIGHT_MEDIUM;
+    line-height: $LINE_HEIGHT_DISPLAY;
+    overflow: hidden;
+    padding: rem(12px) rem(25px);
+    position: relative;
+    text-align: center;
+    text-transform: uppercase;
+
+    span {
+      position: relative;
+    }
+
+    &:before {
+      content: '';
+      background-color: $COLOR_BACKGROUND;
+      border-radius: 50%;
+      height: 50px;
+      width: 50px;
+      position: absolute;
+      left: calc(50% - 25px);
+      top: calc(50% - 25px);
+      transform: translateY(100%) scale(0);
+      transition: transform $ANIMATION_TIME $ANIMATION_EASING_OUT;
+    }
+
+    &:hover {
+      color: $COLOR_PRIMARY;
+
+      &::before {
+        transform: translateY(0) scale(15);
+      }
+    }
+  }
+}

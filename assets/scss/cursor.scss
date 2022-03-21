@@ -23,7 +23,7 @@
     @include transition(transform);
     font-size: rem(13px);
     transform: scale(0);
-    font-weight: $FONT_WEIGHT_BOLD;
+    font-weight: $FONT_WEIGHT_MEDIUM;
     margin-top: 5px;
     transform-origin: center;
     text-transform: uppercase;

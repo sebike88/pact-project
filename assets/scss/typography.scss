@@ -28,3 +28,11 @@ $BASE_FONT_SIZE: 16px;
     font-size: rem(70px);
   }
 }
+
+.body {
+  font-size: rem(14px);
+
+  @include mq($from: large) {
+    font-size: rem(16px);
+  }
+}
